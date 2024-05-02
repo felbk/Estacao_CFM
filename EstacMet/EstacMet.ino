@@ -1,4 +1,5 @@
-
+#include <Adafruit_Sensor.h>
+#include <DHT.h>
 
 void setup() { 
 
