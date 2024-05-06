@@ -1,25 +1,30 @@
 //Bibliotecas Adafruit (BMP280 e DHT22)
 #include <Adafruit_Sensor.h>
-#include <DHT.h>
+#include <DHT.h> 
 #include <Adafruit_BMP280.h> 
 
+//Bibliotecas para manipular o LCD
 #include <Wire.h> 
 #include <LiquidCrystal_I2C.h>
 
 // Funcao para definir endereco e tamanho do LCD
 // LiquidCrystal_I2C lcd(endereco,colunas,linhas);
 LiquidCrystal_I2C lcd(0x27,16,2);
-// Pode ser que seu endereco seja outro
+
 //Variável e objeto para manipular DHT22
 DHT dht(2, DHT22);
 float umid;
 
 //Variáveis para manipulação do LM35
-int adc;
+int adc; 
 float tensao;
-float temp = 0.00;
+float temp ;
 float Ad_temp;
-float IncLM35 = 0.61;
+
+//Incertezas
+float IncLM35 = 0.61; // incerteza padrão de medição do LM35 (°C)
+float IncDHT22 = 0; //incerteza padrão de medição do DHT22 (%)
+
 //Variáveis para manipulação do BMP280
 Adafruit_BMP280 bmp; //OBJETO DO TIPO Adafruit_BMP280 (I2C)
 float pressao,alt; // declaracao de variaveis
@@ -32,19 +37,20 @@ void setup() {
   bmp.begin(0x76); // Inicia o BMP no endereco 0x76
   analogReference(INTERNAL); // Conversao A/D com fundo de escala de 1.1V para o LM35
   pinMode(A0,INPUT); // Inicia o pino A0 como entrada
-  //Inicia LCD
+
+ //Inicia LCD
  lcd.init(); // inicializa o lcd
   lcd.backlight(); // liga o backlight
   lcd.setCursor(0,0);  // posiciona o cursor
-  lcd.print("Camila");  // Escreve no LCD
+  lcd.print("Estação");  // Escreve no LCD
   lcd.setCursor(0,1);  // posiciona o cursor
-  lcd.print("Mendes");  // Escreve no LCD
-  delay(2000);
+  lcd.print(" Meteorologica");  // Escreve no LCD
+  delay(5000);
   lcd.clear();
 }
 void loop(){
 
-  umid = dht.readHumidity();
+  umid = dht.readHumidity(); // salva umidade sem ajuste
   //Ad_umid = 
 
 //LM35
