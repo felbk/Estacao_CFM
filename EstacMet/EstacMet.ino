@@ -29,20 +29,22 @@ float IncDHT22 = 0; //incerteza padrão de medição do DHT22 (%)
 Adafruit_BMP280 bmp; //OBJETO DO TIPO Adafruit_BMP280 (I2C)
 float pressao,alt; // declaracao de variaveis
 
-
+#define  LM A0
+#define LDR A1
 
 
 void setup() { 
   dht.begin(); //Inicia a comunicação da biblioteca DHT
   bmp.begin(0x76); // Inicia o BMP no endereco 0x76
   analogReference(INTERNAL); // Conversao A/D com fundo de escala de 1.1V para o LM35
-  pinMode(A0,INPUT); // Inicia o pino A0 como entrada
+  pinMode(LM,INPUT); // Inicia o pino do LM35 como entrada
+  pinMode(LDR,INPUT); // Inicia o pino do LDR como entrada
 
  //Inicia LCD
  lcd.init(); // inicializa o lcd
   lcd.backlight(); // liga o backlight
   lcd.setCursor(0,0);  // posiciona o cursor
-  lcd.print("Estação");  // Escreve no LCD
+  lcd.print("Estacao");  // Escreve no LCD
   lcd.setCursor(0,1);  // posiciona o cursor
   lcd.print(" Meteorologica");  // Escreve no LCD
   delay(5000);
