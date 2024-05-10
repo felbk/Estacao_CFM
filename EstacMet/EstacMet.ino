@@ -14,6 +14,7 @@ LiquidCrystal_I2C lcd(0x27,16,2);
 //Variável e objeto para manipular DHT22
 DHT dht(2, DHT22);
 float umid;
+float Ad_umid;
 
 //Variáveis para manipulação do LM35
 int adc; 
@@ -22,9 +23,10 @@ float temp ;
 float Ad_temp;
 
 //Incertezas
-float IncLM35 = 0.61; // incerteza padrão de medição do LM35 (°C)
-float IncDHT22 = 0; //incerteza padrão de medição do DHT22 (%)
-
+float IncLM35 = 0.54; // incerteza padrão de medição do LM35 (°C)
+float IncDHT22 = 2; //incerteza padrão de medição do DHT22 (%)
+float IncBMP280Press = 0.12; //incerteza padrão de medição de pressão do BMP (hPa)
+float IncBMP280Alt = 1; //incerteza padrão de medição de altitude do BMP (m)
 //Variáveis para manipulação do BMP280
 Adafruit_BMP280 bmp; //OBJETO DO TIPO Adafruit_BMP280 (I2C)
 float pressao,alt; // declaracao de variaveis
@@ -43,6 +45,31 @@ void setup() {
  //Inicia LCD
  lcd.init(); // inicializa o lcd
   lcd.backlight(); // liga o backlight
+
+ //info grupo e disciplina
+  lcd.setCursor(0,0);  // posiciona o cursor
+  lcd.print("Instrumentacao");  // Escreve no LCD
+  lcd.setCursor(0,1);  // posiciona o cursor
+  lcd.print("e Medicao");  // Escreve no LCD
+  delay(5000);
+  lcd.clear();
+  lcd.setCursor(5,0);  // posiciona o cursor
+  lcd.print("Grupo ");  // Escreve no LCD
+  lcd.setCursor(6,1);  // posiciona o cursor
+  lcd.print("FMC");  // Escreve no LCD
+  delay(5000);
+  lcd.clear();
+  lcd.setCursor(0,0);  // posiciona o cursor
+  lcd.print("Felipe, ");  // Escreve no LCD
+  lcd.setCursor(8,0);  // posiciona o cursor
+  lcd.print("Matheus");  // Escreve no LCD
+  lcd.setCursor(4,1);  // posiciona o cursor
+  lcd.print("E Camila");  // Escreve no LCD
+  delay(5000);
+  lcd.clear();
+
+
+ //info estação
   lcd.setCursor(0,0);  // posiciona o cursor
   lcd.print("Estacao");  // Escreve no LCD
   lcd.setCursor(0,1);  // posiciona o cursor
@@ -51,9 +78,11 @@ void setup() {
   lcd.clear();
 }
 void loop(){
+  // Inicia 
+ 
 
   umid = dht.readHumidity(); // salva umidade sem ajuste
-  //Ad_umid = 
+  Ad_umid = 1.2*umid - 11.82;
 
 //LM35
   adc = analogRead(A0);       //Le a entrada analogica A0
@@ -70,10 +99,17 @@ void loop(){
 
 //EXIBE INFORMAÇÕES
   lcd.setCursor(0,0);  // posiciona o cursor
-  lcd.print("Pessao:");  // Escreve no LCD
+  lcd.print("Pressao:");  // Escreve no LCD
   lcd.setCursor(8,0);  // posiciona o cursor
   lcd.print(pressao);  // Escreve no LCD
   lcd.setCursor(13,0);  // posiciona o cursor
+  lcd.print("hPa");  // Escreve no LCD
+  //Exibe a incerteza da pressão
+  lcd.setCursor(0,1);  // posiciona o cursor
+  lcd.print("Incert:+-");  // Escreve no LCD
+  lcd.setCursor(10,1);  // posiciona o cursor
+  lcd.print(IncBMP280Press,2);  // Escreve no LCD
+  lcd.setCursor(13,1);  // posiciona o cursor
   lcd.print("hPa");  // Escreve no LCD
   delay(3000);
   lcd.clear();
@@ -85,6 +121,30 @@ void loop(){
   lcd.print(alt);  // Escreve no LCD
   lcd.setCursor(15,0);  // posiciona o cursor
   lcd.print("m");  // Escreve no LCD
+ //Exibe a incerteza da altitude
+  lcd.setCursor(0,1);  // posiciona o cursor
+  lcd.print("Incert:+-");  // Escreve no LCD
+  lcd.setCursor(10,1);  // posiciona o cursor
+  lcd.print(IncBMP280Alt,2);  // Escreve no LCD
+  lcd.setCursor(15,1);  // posiciona o cursor
+  lcd.print("m");  // Escreve no LCD
+  delay(3000);
+  lcd.clear();
+
+     lcd.setCursor(0,0);  // posiciona o cursor
+  lcd.print("Umidade:");  // Escreve no LCD
+  lcd.setCursor(9,0);  // posiciona o cursor
+  lcd.print(Ad_umid);  // Escreve no LCD
+  lcd.setCursor(15,0);  // posiciona o cursor
+  lcd.print("%");  // Escreve no LCD
+
+   //Exibe a incerteza da umidade
+  lcd.setCursor(0,1);  // posiciona o cursor
+  lcd.print("Incert:+-");  // Escreve no LCD
+  lcd.setCursor(10,1);  // posiciona o cursor
+  lcd.print(IncDHT22,2);  // Escreve no LCD
+  lcd.setCursor(15,1);  // posiciona o cursor
+  lcd.print("%");  // Escreve no LCD
   delay(3000);
   lcd.clear();
 
