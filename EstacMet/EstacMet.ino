@@ -31,6 +31,10 @@ float IncBMP280Alt = 1; //incerteza padrão de medição de altitude do BMP (m)
 Adafruit_BMP280 bmp; //OBJETO DO TIPO Adafruit_BMP280 (I2C)
 float pressao,alt; // declaracao de variaveis
 
+//variaveis LDR
+int bin;
+float Vout, RLDR, lum;
+
 #define  LM A0
 #define LDR A1
 
@@ -41,6 +45,7 @@ void setup() {
   analogReference(INTERNAL); // Conversao A/D com fundo de escala de 1.1V para o LM35
   pinMode(LM,INPUT); // Inicia o pino do LM35 como entrada
   pinMode(LDR,INPUT); // Inicia o pino do LDR como entrada
+  
 
  //Inicia LCD
  lcd.init(); // inicializa o lcd
@@ -97,7 +102,15 @@ void loop(){
                                     // 1 atm = 1013,25 hPa (hectopascal)
 
 
+//LDR
+bin = analogRead(LDR);
+Vout = bin*1.1/1024.0;
+RLDR = (3.3-Vout)/Vout * 49820
+lum = 
+
+
 //EXIBE INFORMAÇÕES
+// Exibe pressão
   lcd.setCursor(0,0);  // posiciona o cursor
   lcd.print("Pressao:");  // Escreve no LCD
   lcd.setCursor(8,0);  // posiciona o cursor
@@ -114,7 +127,7 @@ void loop(){
   delay(3000);
   lcd.clear();
 
-
+// Exibe altitude
    lcd.setCursor(0,0);  // posiciona o cursor
   lcd.print("Altitude:");  // Escreve no LCD
   lcd.setCursor(10,0);  // posiciona o cursor
@@ -131,6 +144,7 @@ void loop(){
   delay(3000);
   lcd.clear();
 
+  //Exibe umidade
      lcd.setCursor(0,0);  // posiciona o cursor
   lcd.print("Umidade:");  // Escreve no LCD
   lcd.setCursor(9,0);  // posiciona o cursor
