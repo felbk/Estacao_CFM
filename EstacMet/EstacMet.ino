@@ -6,6 +6,10 @@
 //Bibliotecas para manipular o LCD
 #include <Wire.h> 
 #include <LiquidCrystal_I2C.h>
+// "Renomeando" portas
+#define  LM A0
+#define LDR A1
+#define Botao 3
 
 // Funcao para definir endereco e tamanho do LCD
 // LiquidCrystal_I2C lcd(endereco,colunas,linhas);
@@ -39,9 +43,6 @@ float Vout, RLDR, lum;
 // Variável para modo do botão 
 int Bt = 0;
 
-#define  LM A0
-#define LDR A1
-#define Botao 2
 
 
 void setup() { 
