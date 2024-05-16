@@ -44,7 +44,7 @@ float Vout, RLDR, lum;
 // Variável para modo do botão 
 int Bt = 0;
 
-int teladelay = 500; //Delay de atualização das informações na tela em ms
+int teladelay = 550; //Delay de atualização das informações na tela em ms
 
 void setup() { 
   dht.begin(); //Inicia a comunicação da biblioteca DHT
@@ -228,14 +228,10 @@ lum = pow(10,(-1.2)*log10(RLDR)+6.69); //iluminância
     lcd.print("Press o (hPa)");  // Escreve no LCD
     lcd.setCursor(5,0);
     lcd.write(2);
-    lcd.setCursor(0,1);  // posiciona o cursor
+    lcd.setCursor(4,1);  // posiciona o cursor
     lcd.print(pressao,2);  // Escreve no LCD
    
     //Exibe a incerteza da temperatura
-    lcd.setCursor(8,1);  // posiciona o cursor
-    lcd.write(0);  // Escreve no LCD
-    lcd.setCursor(10,1 );
-    lcd.print(IncBMP280Press,2);  // Escreve no LCD
      lcd.setCursor(0,1);
     delay(teladelay);
     lcd.print("               ");
@@ -265,14 +261,10 @@ lum = pow(10,(-1.2)*log10(RLDR)+6.69); //iluminância
     lcd.print("Ilumin ncia (lx)");  // Escreve no LCD
     lcd.setCursor(6,0);
     lcd.write(3);
-    lcd.setCursor(0,1);  // posiciona o cursor
-    lcd.print(lum,4);  // Escreve no LCD
+    lcd.setCursor(4,1);  // posiciona o cursor
+    lcd.print(lum,2);  // Escreve no LCD
    
     //Exibe a incerteza da temperatura
-    lcd.setCursor(9,1);  // posiciona o cursor
-    lcd.write(0);  // Escreve no LCD
-    lcd.setCursor(10,1 );
-    lcd.print(IncLDR,4);  // Escreve no LCD
     lcd.setCursor(0,1);
     delay(teladelay);
     lcd.print("               ");
